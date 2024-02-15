@@ -26,6 +26,9 @@ public class Users {
     @Column(columnDefinition = "TINYINT(1)")
     private boolean active;
 
+    public Users() {
+    }
+
     public Users(UsersDTO data) {
         this.username = data.username();
         this.email = data.email();
@@ -43,6 +46,11 @@ public class Users {
 
     public void disable() {
         this.active = false;
+    }
+
+    public boolean comparePassword(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(password, this.password);
     }
 
 }
