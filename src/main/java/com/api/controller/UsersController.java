@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -17,8 +19,9 @@ public class UsersController {
     private UsersRepository repository;
 
     @GetMapping
-    public String findAll() {
-        return "Hello user!";
+    public ResponseEntity<?> findAll() {
+        List<Users> users = repository.findAll();
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping
