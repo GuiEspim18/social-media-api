@@ -17,8 +17,13 @@ public class Users {
     public String username;
     public String email;
     private String password;
+
+    @Column(columnDefinition = "TINYINT(1)")
     public boolean online;
+
     public Date createdAt;
+
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean active;
 
     public Users(UsersDTO data) {
