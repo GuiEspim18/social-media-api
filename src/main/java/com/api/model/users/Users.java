@@ -19,7 +19,7 @@ public class Users {
     private String password;
     public boolean online;
     public Date createdAt;
-    public boolean active;
+    private boolean active;
 
     public Users(UsersDTO data) {
         this.username = data.username();
@@ -28,12 +28,16 @@ public class Users {
         this.active = true;
         this.online = false;
         this.createdAt = new Date();
+        System.out.println(this.password);
     }
 
     private String hashPassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hash = encoder.encode(password);
-        return hash;
+        return encoder.encode(password);
+    }
+
+    public void disable() {
+        this.active = false;
     }
 
 }

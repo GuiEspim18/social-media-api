@@ -1,8 +1,8 @@
 package com.api.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.api.model.users.Users;
+import com.api.model.users.dto.UsersDTO;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -11,6 +11,12 @@ public class UsersController {
     @GetMapping
     public String findAll() {
         return "Hello user!";
+    }
+
+    @PostMapping
+    public void create(@RequestBody UsersDTO data) {
+        Users user = new Users(data);
+        System.out.println(user);
     }
 
 }
