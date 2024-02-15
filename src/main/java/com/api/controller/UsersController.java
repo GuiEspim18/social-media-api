@@ -22,7 +22,7 @@ public class UsersController extends Exceptions {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        List<Users> users = repository.findByActiveTrue();
+        List<UsersDetailsDTO> users = repository.findByActiveTrue();
         return ResponseEntity.ok(users);
     }
 
