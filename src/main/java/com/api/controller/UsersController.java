@@ -4,6 +4,7 @@ import com.api.model.users.Users;
 import com.api.model.users.UsersRepository;
 import com.api.model.users.dto.UsersDTO;
 import com.api.model.users.dto.UsersDetailsDTO;
+import com.api.utils.exceptions.Exceptions;
 import com.api.utils.responseBody.ResponseBody;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UsersController {
+public class UsersController extends Exceptions {
 
     @Autowired
     private UsersRepository repository;
@@ -33,7 +34,7 @@ public class UsersController {
             repository.save(user);
             return ResponseEntity.ok(new UsersDetailsDTO(user));
         } else {
-            return ResponseEntity.status(500).body(new ResponseBody("User already registered!"));
+            return sendResponse("User already registered!", 500);
         }
 
     }

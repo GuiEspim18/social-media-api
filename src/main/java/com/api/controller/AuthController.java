@@ -3,6 +3,7 @@ package com.api.controller;
 import com.api.model.login.dto.LoginDTO;
 import com.api.model.users.Users;
 import com.api.model.users.UsersRepository;
+import com.api.utils.exceptions.Exceptions;
 import com.api.utils.responseBody.ResponseBody;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController extends Exceptions {
 
     @Autowired
     private UsersRepository repository;
@@ -23,13 +24,14 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody @Valid LoginDTO data) {
         Users user = repository.findByEmail(data.email());
         if (user == null) {
-            return ResponseEntity.status(500).body(new ResponseBody("Not found user!"));
+            return sendResponse("Not found user!", 404);
         }
         boolean passwordMatches = user.comparePassword(data.password());
         if (passwordMatches) {
-            return ResponseEntity.ok(new ResponseBody("Hello, " + user.username + "!"));
+            String message = "Hello, " + user.username + "!";
+            return sendResponse(message);
         } else {
-            return ResponseEntity.status(500).body(new ResponseBody("Incorrect password!"));
+            return sendResponse("Incorrect password!");
         }
     }
 
