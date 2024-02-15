@@ -29,6 +29,9 @@ public class Users implements UserDetails {
     @Column(columnDefinition = "TINYINT(1)")
     private boolean active;
 
+    @Column(columnDefinition = "TINYINT(1)")
+    private boolean admin;
+
     public Users() {
     }
 
@@ -39,6 +42,7 @@ public class Users implements UserDetails {
         this.active = true;
         this.online = false;
         this.createdAt = new Date();
+        this.admin = false;
         System.out.println(this.password);
     }
 
