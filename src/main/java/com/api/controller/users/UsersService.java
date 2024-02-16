@@ -1,33 +1,23 @@
-package com.api.controller;
+package com.api.controller.users;
 
 import com.api.model.users.Users;
 import com.api.model.users.UsersRepository;
 import com.api.model.users.dto.UsersDTO;
 import com.api.model.users.dto.UsersDetailsDTO;
 import com.api.utils.exceptions.Exceptions;
-import com.api.utils.responseBody.ResponseBody;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/users")
-public class UsersController extends Exceptions {
+@Service
+public class UsersService extends Exceptions {
 
     @Autowired
     private UsersRepository repository;
 
-    @GetMapping
-    public ResponseEntity<?> findAll() {
-        List<UsersDetailsDTO> users = repository.findByActiveTrue();
-        return ResponseEntity.ok(users);
-    }
-
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid UsersDTO data) {
+    public ResponseEntity<?> create(UsersDTO data) {
         Users found = repository.findByEmail(data.email());
         if (found == null) {
             Users user = new Users(data);
@@ -36,7 +26,10 @@ public class UsersController extends Exceptions {
         } else {
             return sendResponse("User already registered!", 500);
         }
-
     }
 
+    public ResponseEntity<?> getAll() {
+        List<UsersDetailsDTO> users = repository.findByActiveTrue();
+        return ResponseEntity.ok(users);
+    }
 }
