@@ -6,7 +6,6 @@ import com.api.model.login.dto.LoginDTO;
 import com.api.model.users.Users;
 import com.api.model.users.UsersRepository;
 import com.api.utils.exceptions.Exceptions;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
