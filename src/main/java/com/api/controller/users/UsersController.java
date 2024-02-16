@@ -4,6 +4,7 @@ import com.api.model.users.dto.UsersDTO;
 import com.api.utils.exceptions.Exceptions;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,8 @@ public class UsersController extends Exceptions {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-        return service.delete(id);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return service.delete(id, token.replace("Bearer ", ""));
     }
 
 }

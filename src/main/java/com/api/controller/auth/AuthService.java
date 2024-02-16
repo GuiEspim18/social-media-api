@@ -19,17 +19,21 @@ public class AuthService extends Exceptions {
     @Autowired
     private TokenService tokenService;
 
-    public ResponseEntity<?> login (LoginDTO data) {
+    public ResponseEntity<?> login(LoginDTO data) {
         Users user = repository.findByEmail(data.email());
         if (user == null) {
             return sendResponse("Not found user!", 404);
         }
         boolean passwordMatches = user.comparePassword(data.password());
         if (passwordMatches) {
-            String jwt = tokenService.generate(user);
-            return ResponseEntity.ok(new TokenDTO(jwt));
+            if (user.isActivated()) {
+                String jwt = tokenService.generate(user);
+                return ResponseEntity.ok(new TokenDTO(jwt));
+            } else {
+                return sendDeactivatedUser();
+            }
         } else {
-            return sendResponse("Incorrect password!");
+            return sendResponse("Incorrect password!", 500);
         }
     }
 

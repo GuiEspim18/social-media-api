@@ -31,7 +31,7 @@ public class Users {
     @Column(columnDefinition = "TINYINT(1)")
     private boolean active;
 
-    public String authorities;
+    private String authorities;
 
     public Users() {
     }
@@ -62,5 +62,14 @@ public class Users {
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.authorities));
+    }
+
+    public boolean isAdmin () {
+        Collection<? extends GrantedAuthority> adminAuthorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return List.of(new SimpleGrantedAuthority(this.authorities)).equals(adminAuthorities) ;
+    }
+
+    public boolean isActivated() {
+        return this.active;
     }
 }

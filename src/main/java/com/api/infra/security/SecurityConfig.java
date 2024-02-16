@@ -3,6 +3,8 @@ package com.api.infra.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,6 +25,8 @@ public class SecurityConfig {
     @Autowired
     private SecurityFilter filter;
 
+    ExpressionParser expressionParser = new SpelExpressionParser();
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -34,7 +38,6 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.PUT, "/auth/logout").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/users").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN");
-                    req.requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN");
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
