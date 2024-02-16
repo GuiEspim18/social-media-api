@@ -34,6 +34,7 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.PUT, "/auth/logout").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/users").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN");
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

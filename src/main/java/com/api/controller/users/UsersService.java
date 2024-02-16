@@ -32,4 +32,11 @@ public class UsersService extends Exceptions {
         List<UsersDetailsDTO> users = repository.findByActiveTrue();
         return ResponseEntity.ok(users);
     }
+
+    public ResponseEntity<?> delete(Long id) {
+        Users found = repository.findById(id).orElseThrow(RuntimeException::new);
+        found.disable();
+        repository.save(found);
+        return ResponseEntity.noContent().build();
+    }
 }

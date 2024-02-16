@@ -23,7 +23,11 @@ public class UsersController extends Exceptions {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid UsersDTO data) {
         return service.create(data);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return service.delete(id);
     }
 
 }
