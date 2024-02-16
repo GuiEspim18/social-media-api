@@ -3,11 +3,13 @@ package com.api.model.users;
 import com.api.model.users.dto.UsersDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -29,8 +31,7 @@ public class Users {
     @Column(columnDefinition = "TINYINT(1)")
     private boolean active;
 
-    @Column(columnDefinition = "TINYINT(1)")
-    public boolean admin;
+    public String authorities;
 
     public Users() {
     }
@@ -42,8 +43,7 @@ public class Users {
         this.active = true;
         this.online = false;
         this.createdAt = new Date();
-        this.admin = false;
-        System.out.println(this.password);
+        this.authorities = "ROLE_USER";
     }
 
     private String hashPassword(String password) {
@@ -58,5 +58,9 @@ public class Users {
     public boolean comparePassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.matches(password, this.password);
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.authorities));
     }
 }
