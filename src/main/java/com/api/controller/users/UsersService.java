@@ -40,12 +40,24 @@ public class UsersService extends Exceptions {
 
     public ResponseEntity<?> delete(Long id, String token) {
         Users found = repository.findById(id).orElseThrow(RuntimeException::new);
-        Users foundByToken = repository.findByEmail(tokenService.getSubject(token));
-        if (foundByToken.isAdmin() || Objects.equals(foundByToken.id, found.id)) {
+        if (isAdminOrSameUser(found, token)) {
             found.disable();
             repository.save(found);
             return ResponseEntity.noContent().build();
         }
         return sendForbidden();
+    }
+
+    public ResponseEntity<?> getOne(Long id, String token) {
+        Users found = repository.findById(id).orElseThrow(RuntimeException::new);
+        if (isAdminOrSameUser(found, token)) {
+
+        }
+        return sendForbidden();
+    }
+
+    private boolean isAdminOrSameUser(Users found, String token) {
+        Users foundByToken = repository.findByEmail(tokenService.getSubject(token));
+        return foundByToken.isAdmin() || Objects.equals(foundByToken.id, found.id);
     }
 }

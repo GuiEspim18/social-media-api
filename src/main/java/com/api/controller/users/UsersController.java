@@ -21,6 +21,11 @@ public class UsersController extends Exceptions {
         return service.getAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOne(@PathVariable Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return service.getOne(id, token.replace("Bearer ", ""));
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid UsersDTO data) {
         return service.create(data);
