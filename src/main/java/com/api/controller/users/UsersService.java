@@ -3,6 +3,7 @@ package com.api.controller.users;
 import com.api.infra.security.TokenService;
 import com.api.model.users.Users;
 import com.api.model.users.UsersRepository;
+import com.api.model.users.dto.GetOneUserDTO;
 import com.api.model.users.dto.UsersDTO;
 import com.api.model.users.dto.UsersDetailsDTO;
 import com.api.utils.exceptions.Exceptions;
@@ -51,7 +52,7 @@ public class UsersService extends Exceptions {
     public ResponseEntity<?> getOne(Long id, String token) {
         Users found = repository.findById(id).orElseThrow(RuntimeException::new);
         if (isAdminOrSameUser(found, token)) {
-
+            return ResponseEntity.ok(new GetOneUserDTO(found));
         }
         return sendForbidden();
     }
