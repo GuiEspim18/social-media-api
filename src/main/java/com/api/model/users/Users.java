@@ -34,6 +34,8 @@ public class Users {
 
     private String authorities;
 
+    public String bio;
+
     public Users() {
     }
 
