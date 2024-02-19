@@ -8,9 +8,10 @@ public record GetOneUserDTO(
         Long id,
         String username,
         String email,
-        Date createdAt
+        Date createdAt,
+        String bio
 ) {
     public GetOneUserDTO(Users user) {
-        this(user.id, user.username, user.email, user.createdAt);
+        this(user.id, user.username, user.email, user.createdAt, user.bio);
     }
 }
