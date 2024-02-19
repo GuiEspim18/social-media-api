@@ -1,5 +1,6 @@
 package com.api.model.users;
 
+import com.api.model.users.dto.UpdateUsersDTO;
 import com.api.model.users.dto.UsersDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -71,5 +72,11 @@ public class Users {
 
     public boolean isActivated() {
         return this.active;
+    }
+
+    public void update(UpdateUsersDTO update) {
+        if (update.username() != null) {
+            this.username = update.username();
+        }
     }
 }

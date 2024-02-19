@@ -4,6 +4,7 @@ import com.api.infra.security.TokenService;
 import com.api.model.users.Users;
 import com.api.model.users.UsersRepository;
 import com.api.model.users.dto.GetOneUserDTO;
+import com.api.model.users.dto.UpdateUsersDTO;
 import com.api.model.users.dto.UsersDTO;
 import com.api.model.users.dto.UsersDetailsDTO;
 import com.api.utils.exceptions.Exceptions;
@@ -40,7 +41,7 @@ public class UsersService extends Exceptions {
     }
 
     public ResponseEntity<?> delete(Long id, String token) {
-        Users found = repository.findById(id).orElseThrow(RuntimeException::new);
+        Users found = findUserById(id);
         if (isAdminOrSameUser(found, token)) {
             found.disable();
             repository.save(found);
@@ -50,7 +51,7 @@ public class UsersService extends Exceptions {
     }
 
     public ResponseEntity<?> getOne(Long id, String token) {
-        Users found = repository.findById(id).orElseThrow(RuntimeException::new);
+        Users found = findUserById(id);
         if (isAdminOrSameUser(found, token)) {
             return ResponseEntity.ok(new GetOneUserDTO(found));
         }
@@ -60,5 +61,19 @@ public class UsersService extends Exceptions {
     private boolean isAdminOrSameUser(Users found, String token) {
         Users foundByToken = repository.findByEmail(tokenService.getSubject(token));
         return foundByToken.isAdmin() || Objects.equals(foundByToken.id, found.id);
+    }
+
+    public ResponseEntity<?> update(String token, UpdateUsersDTO update) {
+        Users found = findUserById(update.id());
+        if (isAdminOrSameUser(found, token)) {
+            found.update(update);
+            repository.save(found);
+            return ResponseEntity.ok(new UsersDetailsDTO(found));
+        }
+        return sendForbidden();
+    }
+
+    private Users findUserById(Long id) {
+        return repository.findById(id).orElseThrow(RuntimeException::new);
     }
 }
