@@ -1,5 +1,6 @@
 package com.api.controller.users;
 
+import com.api.model.users.dto.UpdateUsersDTO;
 import com.api.model.users.dto.UsersDTO;
 import com.api.utils.exceptions.Exceptions;
 import jakarta.validation.Valid;
@@ -33,7 +34,16 @@ public class UsersController extends Exceptions {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        return service.delete(id, token.replace("Bearer ", ""));
+        return service.delete(id, formatToken(token));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody UpdateUsersDTO data, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return service.update(data, formatToken(token));
+    }
+
+    private String formatToken (String token) {
+        return token.replace("Bearer ", "");
     }
 
 }

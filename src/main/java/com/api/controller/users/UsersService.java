@@ -63,7 +63,7 @@ public class UsersService extends Exceptions {
         return foundByToken.isAdmin() || Objects.equals(foundByToken.id, found.id);
     }
 
-    public ResponseEntity<?> update(String token, UpdateUsersDTO update) {
+    public ResponseEntity<?> update(UpdateUsersDTO update, String token) {
         Users found = findUserById(update.id());
         if (isAdminOrSameUser(found, token)) {
             found.update(update);
