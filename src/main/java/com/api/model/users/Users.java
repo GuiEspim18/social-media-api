@@ -80,5 +80,8 @@ public class Users {
         if (update.username() != null) {
             this.username = update.username();
         }
+        if (update.bio() != null) {
+            this.bio = update.bio();
+        }
     }
 }
