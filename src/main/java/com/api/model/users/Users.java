@@ -1,5 +1,6 @@
 package com.api.model.users;
 
+import com.api.model.posts.Posts;
 import com.api.model.users.dto.UpdateUsersDTO;
 import com.api.model.users.dto.UsersDTO;
 import jakarta.persistence.*;
@@ -7,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -35,6 +33,9 @@ public class Users {
     private String authorities;
 
     public String bio;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    public List<Posts> posts = new ArrayList<>();
 
     public Users() {
     }

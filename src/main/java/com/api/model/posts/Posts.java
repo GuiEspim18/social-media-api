@@ -1,5 +1,6 @@
 package com.api.model.posts;
 
+import com.api.model.users.Users;
 import jakarta.persistence.*;
 
 @Entity(name = "Posts")
@@ -11,6 +12,10 @@ public class Posts {
     public Long id;
 
     public String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    public Users user;
 
 
 }
