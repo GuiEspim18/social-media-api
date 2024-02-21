@@ -38,7 +38,7 @@ public class UsersController extends Exceptions {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody UpdateUsersDTO data, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<?> update(@RequestBody @Valid UpdateUsersDTO data, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return service.update(data, formatToken(token));
     }
 
