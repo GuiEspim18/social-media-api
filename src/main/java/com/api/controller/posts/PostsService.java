@@ -2,6 +2,7 @@ package com.api.controller.posts;
 
 import com.api.model.posts.Posts;
 import com.api.model.posts.PostsRepository;
+import com.api.model.posts.dto.PostsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class PostsService {
     public ResponseEntity<?> getAll() {
         List<Posts> posts = repository.findAll();
         return ResponseEntity.ok(posts);
+    }
+
+    public ResponseEntity<?> create(PostsDTO data) {
+        repository.save(new Posts(data));
+        return ResponseEntity.ok(data);
     }
 
 }

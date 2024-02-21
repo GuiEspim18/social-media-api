@@ -1,5 +1,6 @@
 package com.api.model.posts;
 
+import com.api.model.posts.dto.PostsDTO;
 import com.api.model.users.Users;
 import jakarta.persistence.*;
 
@@ -16,6 +17,15 @@ public class Posts {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     public Users user;
+
+    public Posts() {
+    }
+
+    public Posts (PostsDTO data) {
+        this.content = data.content();
+        this.user = new Users();
+        this.user.id = data.user();
+    }
 
 
 }
