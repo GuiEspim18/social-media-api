@@ -50,12 +50,9 @@ public class UsersService extends Exceptions {
         return sendForbidden();
     }
 
-    public ResponseEntity<?> getOne(Long id, String token) {
+    public ResponseEntity<?> getOne(Long id) {
         Users found = findUserById(id);
-        if (isAdminOrSameUser(found, token)) {
-            return ResponseEntity.ok(new GetOneUserDTO(found));
-        }
-        return sendForbidden();
+        return ResponseEntity.ok(new GetOneUserDTO(found));
     }
 
     private boolean isAdminOrSameUser(Users found, String token) {

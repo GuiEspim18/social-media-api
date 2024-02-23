@@ -23,8 +23,8 @@ public class UsersController extends Exceptions {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOne(@PathVariable Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        return service.getOne(id, token.replace("Bearer ", ""));
+    public ResponseEntity<?> getOne(@PathVariable("id") Long id) {
+        return service.getOne(id);
     }
 
     @PostMapping
