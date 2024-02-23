@@ -20,7 +20,7 @@ public class PostsController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid PostsDTO data) {
-        return ResponseEntity.ok(data);
+        return service.create(data);
     }
 
 }

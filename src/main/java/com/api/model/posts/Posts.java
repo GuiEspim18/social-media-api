@@ -21,10 +21,9 @@ public class Posts {
     public Posts() {
     }
 
-    public Posts (PostsDTO data) {
-        this.content = data.content();
-        this.user = new Users();
-        this.user.id = data.user();
+    public Posts (String content, Users user) {
+        this.content = content;
+        this.user = user;
     }
 
 
