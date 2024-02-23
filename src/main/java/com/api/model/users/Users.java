@@ -34,7 +34,7 @@ public class Users {
 
     public String bio;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     public List<Posts> posts = new ArrayList<>();
 
     public Users() {
