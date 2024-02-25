@@ -1,6 +1,5 @@
 package com.api.model.posts;
 
-import com.api.model.posts.dto.PostsDTO;
 import com.api.model.users.Users;
 import jakarta.persistence.*;
 
