@@ -1,5 +1,6 @@
 package com.api.model.users;
 
+import com.api.model.likes.Likes;
 import com.api.model.posts.Posts;
 import com.api.model.users.dto.UpdateUsersDTO;
 import com.api.model.users.dto.UsersDTO;
@@ -36,6 +37,10 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     public List<Posts> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Column(nullable = true)
+    public List<Likes> likes = new ArrayList<>();
 
     public Users() {
     }
