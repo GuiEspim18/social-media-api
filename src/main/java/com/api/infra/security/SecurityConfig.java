@@ -40,6 +40,7 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.GET, "/users").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/users/{id}").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/posts").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/likes").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

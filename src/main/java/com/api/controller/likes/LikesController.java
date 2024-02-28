@@ -2,18 +2,20 @@ package com.api.controller.likes;
 
 import com.api.model.likes.dto.LikesDTO;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/likes")
+@RestController
+@RequestMapping("/likes")
 public class LikesController {
+
+    @Autowired
+    private LikesService likesService;
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok("Get All");
+        return likesService.getAll();
     }
 
     @PostMapping

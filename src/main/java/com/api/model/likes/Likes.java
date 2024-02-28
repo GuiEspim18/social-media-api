@@ -13,9 +13,14 @@ public class Likes {
     public Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     public Users user;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id")
     public Posts post;
+
+    public Likes() {
+    }
 
 }
