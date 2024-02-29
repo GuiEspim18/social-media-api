@@ -33,14 +33,21 @@ public class LikesService {
     public ResponseEntity<?> create (LikesDTO data) {
         Users user = usersRepository.findById(data.user()).orElseThrow(RuntimeException::new);
         Likes like = repository.findByUser(user);
-        if (like != null) {
+        if (like == null) {
+            return save(data, user);
+        } else {
             if (!(like.post.id == data.post())) {
-                Posts post = postsRepository.findById(data.post()).orElseThrow(RuntimeException::new);
-                repository.save(new Likes(post, user));
-                return ResponseEntity.ok(data);
+                return save(data, user);
             }
+            repository.delete(like);
+            return ResponseEntity.noContent().build();
         }
-        throw new RuntimeException();
+    }
+
+    private ResponseEntity<?> save(LikesDTO data, Users user) {
+        Posts post = postsRepository.findById(data.post()).orElseThrow(RuntimeException::new);
+        repository.save(new Likes(post, user));
+        return ResponseEntity.ok(data);
     }
 
 }
