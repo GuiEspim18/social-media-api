@@ -1,5 +1,6 @@
 package com.api.model.likes;
 
+import com.api.model.likes.dto.LikesDTO;
 import com.api.model.posts.Posts;
 import com.api.model.users.Users;
 import jakarta.persistence.*;
@@ -21,6 +22,10 @@ public class Likes {
     public Posts post;
 
     public Likes() {
+    }
+
+    public Likes(Posts post, Users user) {
+
     }
 
 }
