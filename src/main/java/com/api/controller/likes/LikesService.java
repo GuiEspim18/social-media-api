@@ -30,7 +30,7 @@ public class LikesService {
         return ResponseEntity.ok(found);
     }
 
-    public ResponseEntity<?> create (LikesDTO data) {
+    public ResponseEntity<?> create (LikesDTO data, String token) {
         Users user = usersRepository.findById(data.user()).orElseThrow(RuntimeException::new);
         Likes like = repository.findByUser(user);
         if (like == null) {

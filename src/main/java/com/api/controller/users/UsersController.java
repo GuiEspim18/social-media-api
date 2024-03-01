@@ -1,5 +1,6 @@
 package com.api.controller.users;
 
+import com.api.infra.security.TokenService;
 import com.api.model.users.dto.UpdateUsersDTO;
 import com.api.model.users.dto.UsersDTO;
 import com.api.utils.exceptions.Exceptions;
@@ -16,6 +17,9 @@ public class UsersController extends Exceptions {
 
     @Autowired
     private UsersService service;
+
+    @Autowired
+    private TokenService tokenService;
 
     @GetMapping
     public ResponseEntity<?> getAll() {
@@ -34,16 +38,12 @@ public class UsersController extends Exceptions {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        return service.delete(id, formatToken(token));
+        return service.delete(id, tokenService.formatToken(token));
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody @Valid UpdateUsersDTO data, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        return service.update(data, formatToken(token));
-    }
-
-    private String formatToken (String token) {
-        return token.replace("Bearer ", "");
+        return service.update(data, tokenService.formatToken(token));
     }
 
 }

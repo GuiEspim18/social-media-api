@@ -52,4 +52,8 @@ public class TokenService {
             throw new RuntimeException(e);
         }
     }
+
+    public String formatToken(String token) {
+        return token.replace("Bearer ", "");
+    }
 }
