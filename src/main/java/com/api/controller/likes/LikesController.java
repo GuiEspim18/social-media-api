@@ -21,7 +21,7 @@ public class LikesController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid LikesDTO data, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        return ResponseEntity.ok("Create");
+        return likesService.create(data, token);
     }
 
 }

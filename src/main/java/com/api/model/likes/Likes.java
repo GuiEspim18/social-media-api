@@ -25,7 +25,8 @@ public class Likes {
     }
 
     public Likes(Posts post, Users user) {
-
+        this.user = user;
+        this.post = post;
     }
 
 }
