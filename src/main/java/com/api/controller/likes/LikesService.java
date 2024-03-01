@@ -36,7 +36,7 @@ public class LikesService {
         if (like == null) {
             return save(data, user);
         } else {
-            if (!(like.post.id == data.post())) {
+            if (!(like.post.id.equals(data.post()))) {
                 return save(data, user);
             }
             repository.delete(like);
